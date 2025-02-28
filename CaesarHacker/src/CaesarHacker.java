@@ -39,12 +39,44 @@ public class CaesarHacker implements ActionListener {
 
 
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == hackButton) {
+            String message = messageField.getText().trim();
 
+            if (message.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Lütfen bir şifreli mesaj girin.", "Hata", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            StringBuilder results = new StringBuilder("Brute-Force Sonuçları:\n");
+
+            for (int key = 0; key < SYMBOLS.length(); key++) {
+                String decryptedMessage = caesarCipher(message, key);
+                results.append("Key #").append(key).append(": ").append(decryptedMessage).append("\n");
+            }
+
+            JTextArea textArea = new JTextArea(results.toString());
+            textArea.setEditable(false);
+            JScrollPane scrollPane = new JScrollPane(textArea);
+
+            JOptionPane.showMessageDialog(frame, scrollPane, "Sonuçlar", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
+    public String caesarCipher(String message, int key) {
+        StringBuilder result = new StringBuilder();
+        message = message.toUpperCase();
 
+        for (char c : message.toCharArray()) {
+            int index = SYMBOLS.indexOf(c);
+            if (index != -1) {
+                int newIndex = (index - key + SYMBOLS.length()) % SYMBOLS.length();
+                result.append(SYMBOLS.charAt(newIndex));
+            } else {
+                result.append(c);
+            }
+        }
+        return result.toString();
+    }
     public static void main(String[] args) {
         new CaesarHacker();
     }
