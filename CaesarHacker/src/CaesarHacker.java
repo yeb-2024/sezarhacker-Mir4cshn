@@ -7,6 +7,7 @@ public class CaesarHacker implements ActionListener {
     private String SYMBOLS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private JFrame frame;
     private JTextField messageField;
+    private JButton hackButton;
 
     CaesarHacker(){
         frame = new JFrame("Caesar Şifreleme Hacker");
@@ -21,7 +22,16 @@ public class CaesarHacker implements ActionListener {
         panel1.add(label1);
         panel1.add(messageField);
 
+
+        JPanel panel2 = new JPanel(new FlowLayout());
+        hackButton = new JButton("Hackle (Brute Force)");
+        hackButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        hackButton.addActionListener(this);
+        panel2.add(hackButton);
+
         frame.add(panel1);
+        frame.add(panel2);
+
         frame.setVisible(true);
     }
 
